@@ -71,7 +71,6 @@ OBJS = $(patsubst %.c,%.o,$(C_FILES))
 # Warnings
 CWARNS += -W
 CWARNS += -Wall
-CWARNS += -Werror
 CWARNS += -Wextra
 CWARNS += -Wformat
 CWARNS += -Wmissing-braces
