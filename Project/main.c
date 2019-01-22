@@ -129,32 +129,20 @@
 #define mainQUEUE_OVERWRITE_PRIORITY	( tskIDLE_PRIORITY )
 
 #define mainTIMER_TEST_PERIOD			( 50 )
-
-void vTask1(void *p)
-{
-	for( ;; )
-	{
-		printf("Task 1\r\n");
-		vTaskDelay(100);
-	}
-}
-void vTask2(void *p)
-{
-	for( ;; )
-	{
-		printf( "Task 2\r\n");
-		vTaskDelay(50);
-	}
-}
-
-
-
 /*-----------------------------------------------------------*/
+
+void vTask1(void*);s
+void vTask2(void*);
+void senderTask(void*);
+void receiverTask(void*);
 
 int main ( void )
 {
+	/*twotask.c*/
 	xTaskCreate( vTask1, "Task 1", 1000, NULL, 1, NULL );
 	xTaskCreate( vTask2, "Task 2", 1000, NULL, 1, NULL );
+
+
 	vTaskStartScheduler();
 	return 0;
 }

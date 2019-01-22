@@ -56,7 +56,7 @@ C_FILES			+= Minimal/TimerDemo.c
 
 # Main Object
 C_FILES			+= main.c
-
+C_FILES			+= twotask.c
 # Include Paths
 INCLUDES        += -I$(SRCROOT)/Source/include
 INCLUDES        += -I$(SRCROOT)/Source/portable/GCC/POSIX/
