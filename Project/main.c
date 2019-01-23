@@ -94,6 +94,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "queue.h"
 
 /* Standard demo includes. */
 #include "AbortDelay.h"
@@ -127,23 +128,42 @@
 #define mainGEN_QUEUE_TASK_PRIORITY		( tskIDLE_PRIORITY )
 #define mainFLOP_TASK_PRIORITY			( tskIDLE_PRIORITY )
 #define mainQUEUE_OVERWRITE_PRIORITY	( tskIDLE_PRIORITY )
-
 #define mainTIMER_TEST_PERIOD			( 50 )
+#define TWOTASK							0
+#define TASKFUNCTION					1
 /*-----------------------------------------------------------*/
+//void vTask1(void*);
+//void vTask2(void*);
+void vApplicationIdleHook(void);
+static void vSenderTask(void *pvParameters);
+static void vReceiverTask(void*pvParameters);
 
-void vTask1(void*);s
-void vTask2(void*);
-void senderTask(void*);
-void receiverTask(void*);
-
+QueueHandle_t xQueue;
+void vTaskFunction( void *pvParameters );
 int main ( void )
 {
-	/*twotask.c*/
-	xTaskCreate( vTask1, "Task 1", 1000, NULL, 1, NULL );
-	xTaskCreate( vTask2, "Task 2", 1000, NULL, 1, NULL );
+//	xTaskCreate( vTask1, "Task 1", 1000, NULL, 1, NULL );
+//	xTaskCreate( vTask2, "Task 2", 1000, NULL, 1, NULL );
+//	static const char *pcTextforTask1="Task 1 : sender\r\n";
+//	static const char *pcTextforTask2="Task 2 : Receiver\r\n";
+//	xTaskCreate(vTaskFunction,"sender",1000,(char*)pcTextforTask1,1,NULL);
+//	xTaskCreate(vTaskFunction,"Receiver",1000,(char*)pcTextforTask2,1,NULL);
+	xQueue = xQueueCreate(5,sizeof(int));
+	if(xQueue!=NULL)
+	{
+		printf("Queue is Created\n");
+		xTaskCreate(vSenderTask,"Sender1",1000,(void*)100,1,NULL);
+		xTaskCreate(vSenderTask,"Sender2",1000,(void*)200,1,NULL);
+		xTaskCreate(vReceiverTask,"Receiver",1000,NULL,2,NULL);
+		vTaskStartScheduler();
+	}
+	else
+	{
+		printf("Failed:Queue not Created\r\n");
+		/* Queue not created */
+	}
+	for(;;);
 
-
-	vTaskStartScheduler();
 	return 0;
 }
 
@@ -156,5 +176,48 @@ void vAssertCalled( unsigned long ulLine, const char * const pcFileName )
 	}
 	taskEXIT_CRITICAL();
 	exit(-1);
+}
+static void vSenderTask(void *pvParameters)
+{
+	int lValueToSend;
+	BaseType_t xStatus;
+	lValueToSend = (int) pvParameters;
+	for(;;)
+	{
+		xStatus = xQueueSendToBack(xQueue,&lValueToSend,0);
+		if(xStatus!=pdPASS)
+		{
+			printf("Could Not Send Data to Queue\r\n");
+		}
+	}
+}
+
+static void vReceiverTask(void *pvParameters)
+{
+	int lReceivedValue;
+	BaseType_t xStatus;
+	const TickType_t xTicksToWait = pdMS_TO_TICKS(100);
+	for(;;)
+	{
+		if(uxQueueMessagesWaiting(xQueue)!=0)
+		{
+			printf("Queue Should havebeen Empty\r\n");
+		}
+		xStatus = xQueueReceive(xQueue,&lReceivedValue,xTicksToWait);
+
+		if(xStatus==pdPASS)
+		{
+			printf("Data Receibed %d\r\n",lReceivedValue);
+		}
+		else
+		{
+			printf("Fail to Received\r\n");
+		}
+	}
+}
+
+void vApplicationIdleHook(void)
+{
+	printf("Idle\r\n");
 }
 /*-----------------------------------------------------------*/
