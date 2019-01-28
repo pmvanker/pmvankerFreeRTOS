@@ -97,8 +97,8 @@
 //void vTask1(void*);
 //void vTask2(void*);
 void vApplicationIdleHook(void);
-static void vSenderTask(void *pvParameters);
-static void vReceiverTask(void*pvParameters);
+void vSenderTask(void *pvParameters);
+void vReceiverTask(void*pvParameters);
 
 QueueHandle_t xQueue;
 void vTaskFunction( void *pvParameters );
@@ -138,44 +138,6 @@ void vAssertCalled( unsigned long ulLine, const char * const pcFileName )
 	}
 	taskEXIT_CRITICAL();
 	exit(-1);
-}
-static void vSenderTask(void *pvParameters)
-{
-	int lValueToSend;
-	BaseType_t xStatus;
-	lValueToSend = (int) pvParameters;
-	for(;;)
-	{
-		xStatus = xQueueSendToBack(xQueue,&lValueToSend,0);
-		if(xStatus!=pdPASS)
-		{
-			printf("Could Not Send Data to Queue\r\n");
-		}
-	}
-}
-
-static void vReceiverTask(void *pvParameters)
-{
-	int lReceivedValue;
-	BaseType_t xStatus;
-	const TickType_t xTicksToWait = pdMS_TO_TICKS(100);
-	for(;;)
-	{
-		if(uxQueueMessagesWaiting(xQueue)!=0)
-		{
-			printf("Queue Should havebeen Empty\r\n");
-		}
-		xStatus = xQueueReceive(xQueue,&lReceivedValue,xTicksToWait);
-
-		if(xStatus==pdPASS)
-		{
-			printf("Data Receibed %d\r\n",lReceivedValue);
-		}
-		else
-		{
-			printf("Fail to Received\r\n");
-		}
-	}
 }
 
 void vApplicationIdleHook(void)
