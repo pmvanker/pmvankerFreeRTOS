@@ -31,29 +31,29 @@ C_FILES			+= heap_3.c
 C_FILES			+= port.c
 
 # Demo Objects
-C_FILES			+= Minimal/blocktim.c
-C_FILES			+= Minimal/countsem.c
-C_FILES			+= Minimal/GenQTest.c
-C_FILES			+= Minimal/QPeek.c
-C_FILES			+= Minimal/recmutex.c
-C_FILES			+= Full/BlockQ.c
-C_FILES			+= Full/death.c
-C_FILES			+= Full/dynamic.c
-C_FILES			+= Full/flop.c
-C_FILES			+= Full/integer.c
-C_FILES			+= Full/PollQ.c
-C_FILES			+= Full/semtest.c
-C_FILES			+= Full/print.c
-
-C_FILES			+= Minimal/AbortDelay.c
-C_FILES			+= Minimal/EventGroupsDemo.c
-C_FILES			+= Minimal/IntSemTest.c
-C_FILES			+= Minimal/QueueSet.c
-C_FILES			+= Minimal/QueueSetPolling.c
-C_FILES			+= Minimal/QueueOverwrite.c
-C_FILES			+= Minimal/TaskNotify.c
-C_FILES			+= Minimal/TimerDemo.c
-
+#C_FILES			+= Minimal/blocktim.c
+#C_FILES			+= Minimal/countsem.c
+#C_FILES			+= Minimal/GenQTest.c
+#C_FILES			+= Minimal/QPeek.c
+#C_FILES			+= Minimal/recmutex.c
+#C_FILES			+= Full/BlockQ.c
+#C_FILES			+= Full/death.c
+#C_FILES			+= Full/dynamic.c
+#C_FILES			+= Full/flop.c
+#C_FILES			+= Full/integer.c
+#C_FILES			+= Full/PollQ.c
+#C_FILES			+= Full/semtest.c
+#C_FILES			+= Full/print.c
+#
+#C_FILES			+= Minimal/AbortDelay.c
+#C_FILES			+= Minimal/EventGroupsDemo.c
+#C_FILES			+= Minimal/IntSemTest.c
+#C_FILES			+= Minimal/QueueSet.c
+#C_FILES			+= Minimal/QueueSetPolling.c
+#C_FILES			+= Minimal/QueueOverwrite.c
+#C_FILES			+= Minimal/TaskNotify.c
+#C_FILES			+= Minimal/TimerDemo.c
+#
 # Main Object
 C_FILES			+= main.c
 #C_FILES			+= twotask.c

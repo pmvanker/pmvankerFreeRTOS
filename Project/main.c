@@ -90,47 +90,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <signal.h>
-
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
-
-/* Standard demo includes. */
-#include "AbortDelay.h"
-#include "BlockQ.h"
-#include "blocktim.h"
-#include "countsem.h"
-#include "death.h"
-#include "dynamic.h"
-#include "EventGroupsDemo.h"
-#include "flop.h"
-#include "GenQTest.h"
-#include "integer.h"
-#include "IntSemTest.h"
-#include "PollQ.h"
-#include "QPeek.h"
-#include "QueueOverwrite.h"
-#include "QueueSet.h"
-#include "QueueSetPolling.h"
-#include "recmutex.h"
-#include "semtest.h"
-#include "TaskNotify.h"
-#include "TimerDemo.h"
-
-/* Priorities at which the tasks are created. */
-#define mainCHECK_TASK_PRIORITY			( configMAX_PRIORITIES - 2 )
-#define mainQUEUE_POLL_PRIORITY			( tskIDLE_PRIORITY + 1 )
-#define mainSEM_TEST_PRIORITY			( tskIDLE_PRIORITY + 1 )
-#define mainBLOCK_Q_PRIORITY			( tskIDLE_PRIORITY + 2 )
-#define mainCREATOR_TASK_PRIORITY		( tskIDLE_PRIORITY + 3 )
-#define mainINTEGER_TASK_PRIORITY		( tskIDLE_PRIORITY )
-#define mainGEN_QUEUE_TASK_PRIORITY		( tskIDLE_PRIORITY )
-#define mainFLOP_TASK_PRIORITY			( tskIDLE_PRIORITY )
-#define mainQUEUE_OVERWRITE_PRIORITY	( tskIDLE_PRIORITY )
-#define mainTIMER_TEST_PERIOD			( 50 )
-#define TWOTASK							0
-#define TASKFUNCTION					1
 /*-----------------------------------------------------------*/
 //void vTask1(void*);
 //void vTask2(void*);
