@@ -93,12 +93,17 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include "mystruct.h"
 /*-----------------------------------------------------------*/
 //void vTask1(void*);
 //void vTask2(void*);
 void vApplicationIdleHook(void);
 void vSenderTask(void *pvParameters);
 void vReceiverTask(void*pvParameters);
+
+
+static const Data_t xStructsToSend[2]={{100,eSender1},{200,eSender2}};
+
 
 QueueHandle_t xQueue;
 void vTaskFunction( void *pvParameters );
@@ -110,22 +115,29 @@ int main ( void )
 //	static const char *pcTextforTask2="Task 2 : Receiver\r\n";
 //	xTaskCreate(vTaskFunction,"sender",1000,(char*)pcTextforTask1,1,NULL);
 //	xTaskCreate(vTaskFunction,"Receiver",1000,(char*)pcTextforTask2,1,NULL);
-	xQueue = xQueueCreate(5,sizeof(int));
+//	xQueue = xQueueCreate(5,sizeof(int));
+//	if(xQueue!=NULL)
+//	{
+//		printf("Queue is Created\n");
+//		xTaskCreate(vSenderTask,"Sender1",1000,(void*)100,1,NULL);
+//		xTaskCreate(vSenderTask,"Sender2",1000,(void*)200,1,NULL);
+//		xTaskCreate(vReceiverTask,"Receiver",1000,NULL,2,NULL);
+//		vTaskStartScheduler();
+//	}
+//	else
+//	{
+//		printf("Failed:Queue not Created\r\n");
+//		/* Queue not created */
+//	}
+	xQueue=xQueueCreate(3,sizeof(Data_t));
 	if(xQueue!=NULL)
 	{
-		printf("Queue is Created\n");
-		xTaskCreate(vSenderTask,"Sender1",1000,(void*)100,1,NULL);
-		xTaskCreate(vSenderTask,"Sender2",1000,(void*)200,1,NULL);
-		xTaskCreate(vReceiverTask,"Receiver",1000,NULL,2,NULL);
-		vTaskStartScheduler();
+		xTaskCreate(vSenderTask,"sender 1",1000,&(xStructsToSend[0]),2,NULL);
+		xTaskCreate(vSenderTask,"sender 2",1000,&(xStructsToSend[1]),2,NULL);
+		xTaskCreate(vReceiverTask,"Receiver",1000,NULL,1,NULL);
 	}
-	else
-	{
-		printf("Failed:Queue not Created\r\n");
-		/* Queue not created */
-	}
-	for(;;);
 
+	vTaskStartScheduler();
 	return 0;
 }
 

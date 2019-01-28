@@ -55,7 +55,8 @@ C_FILES			+= port.c
 #C_FILES			+= Minimal/TimerDemo.c
 #
 # Main Object
-C_FILES			+= queue_rxtx.c
+#C_FILES			+= queue_rxtx.c
+C_FILES			+= struct.c
 C_FILES			+= main.c
 #C_FILES			+= twotask.c
 #C_FILES			+= taskfunction.c
