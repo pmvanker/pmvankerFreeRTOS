@@ -64,7 +64,7 @@ C_FILES			+= main.c
 INCLUDES        += -I$(SRCROOT)/Source/include
 INCLUDES        += -I$(SRCROOT)/Source/portable/GCC/POSIX/
 INCLUDES        += -I$(SRCROOT)/Project
-
+INCLUDES        += -I/usr/include/x86_64-linux-gnu/
 # Generate OBJS names
 OBJS = $(patsubst %.c,%.o,$(C_FILES))
 
