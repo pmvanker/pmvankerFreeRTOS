@@ -93,54 +93,38 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
-#include "mystruct.h"
 /*-----------------------------------------------------------*/
-//void vTask1(void*);
-//void vTask2(void*);
+void vTask1(void*);
+void vTask2(void*);
 void vApplicationIdleHook(void);
-void vSenderTask(void *pvParameters);
-void vReceiverTask(void*pvParameters);
 
 
-static const Data_t xStructsToSend[2]={{100,eSender1},{200,eSender2}};
 
 
-QueueHandle_t xQueue;
-void vTaskFunction( void *pvParameters );
 int main ( void )
 {
-//	xTaskCreate( vTask1, "Task 1", 1000, NULL, 1, NULL );
-//	xTaskCreate( vTask2, "Task 2", 1000, NULL, 1, NULL );
-//	static const char *pcTextforTask1="Task 1 : sender\r\n";
-//	static const char *pcTextforTask2="Task 2 : Receiver\r\n";
-//	xTaskCreate(vTaskFunction,"sender",1000,(char*)pcTextforTask1,1,NULL);
-//	xTaskCreate(vTaskFunction,"Receiver",1000,(char*)pcTextforTask2,1,NULL);
-//	xQueue = xQueueCreate(5,sizeof(int));
-//	if(xQueue!=NULL)
-//	{
-//		printf("Queue is Created\n");
-//		xTaskCreate(vSenderTask,"Sender1",1000,(void*)100,1,NULL);
-//		xTaskCreate(vSenderTask,"Sender2",1000,(void*)200,1,NULL);
-//		xTaskCreate(vReceiverTask,"Receiver",1000,NULL,2,NULL);
-//		vTaskStartScheduler();
-//	}
-//	else
-//	{
-//		printf("Failed:Queue not Created\r\n");
-//		/* Queue not created */
-//	}
-	xQueue=xQueueCreate(3,sizeof(Data_t));
-	if(xQueue!=NULL)
-	{
-		xTaskCreate(vSenderTask,"sender 1",1000,&(xStructsToSend[0]),2,NULL);
-		xTaskCreate(vSenderTask,"sender 2",1000,&(xStructsToSend[1]),2,NULL);
-		xTaskCreate(vReceiverTask,"Receiver",1000,NULL,1,NULL);
-	}
+	xTaskCreate( vTask1, "Task 1", 1000, NULL, 1, NULL );
+	xTaskCreate( vTask2, "Task 2", 1000, NULL, 1, NULL );
 
 	vTaskStartScheduler();
 	return 0;
 }
 
+
+void vTask1(void* parameter)
+{
+    while(1){
+        printf("Task 1\n");
+        sleep(500);
+    }
+}
+void vTask2(void* parameter)
+{
+    while(1){
+        printf("Task 2\n");
+        sleep(500);
+    }
+}
 void vAssertCalled( unsigned long ulLine, const char * const pcFileName )
 {
  	taskENTER_CRITICAL();
